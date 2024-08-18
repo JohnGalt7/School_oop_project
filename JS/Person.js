@@ -15,7 +15,9 @@ class Person {
   // static, bc no need to inherit for instances, can access or modify via methods
 
   static #registry = new Registry("personregistry");
-
+  static readRegistryList() {
+    return this.#registry.readList();
+  }
   constructor(firstName, lastName, birthYear) {
     this.#firstName = firstName;
     this.#lastName = lastName;
@@ -35,6 +37,10 @@ class Person {
 
   showList() {
     return Person.#registry.readList();
+  }
+
+  get list() {
+    return Person.#registry;
   }
 
   // read #id
@@ -59,6 +65,12 @@ class Person {
     this.#lastName = newLastName;
   }
 
+  // manipulate age
+  set birthYear(year) {
+    this.#birthYear = year;
+    this.#age = this.calculateAge();
+  }
+
   // maniupulate email
 
   set email(newEmail) {
@@ -76,11 +88,12 @@ class Person {
     return regex.test(phoneNumber);
   }
 
+  //manipulate telephone number
+
   set phoneNumber(newPhoneNumber) {
     if (this.validatePhoneNumber(newPhoneNumber)) {
       this.#phoneNumber = newPhoneNumber;
-      return `Phone number set to ${newPhoneNumber}`;
-    } else return `Error: ${newPhoneNumber} is not valid. Should contain 11 numbers and should start with '06'`;
+    } else console.log(`Error: ${newPhoneNumber} is not valid. Should contain 11 numbers and should start with '06'`);
   }
 
   get phoneNumber() {

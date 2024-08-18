@@ -1,10 +1,12 @@
 "use strict";
 
+import Person from "./Person.js";
+
 class manipulateDom {
   // input manipulation for Person Class
 
   static displayPersonInputs() {
-    // creating new person instance - TODO refactor
+    // creating new person instance - TODO refactor - ain't nobody got time for that
 
     const container = document.createElement("div");
     container.className = "inputField";
@@ -26,6 +28,9 @@ class manipulateDom {
     const applyButton = document.createElement("button");
     applyButton.id = "newPeople";
     applyButton.textContent = "OK";
+
+    // display in the DOM
+
     container.appendChild(infoText);
     container.appendChild(textInput);
     container.appendChild(textInput2);
@@ -37,10 +42,6 @@ class manipulateDom {
   // displaying information regarding the Person class
 
   static displayPerson(person) {
-    const container = document.createElement("div");
-    container.className = "person";
-    container.id = "people-container";
-
     const header = document.createElement("div");
     header.id = "a-people";
     header.className = "person";
@@ -76,8 +77,7 @@ class manipulateDom {
     header.appendChild(nameText);
     header.appendChild(ageText);
     header.appendChild(phoneNumberText);
-    container.appendChild(header);
-    document.body.appendChild(container);
+    document.body.appendChild(header);
 
     // createing input fields for manipulation
 
@@ -100,6 +100,7 @@ class manipulateDom {
           break;
         case 4:
           tempInput.setAttribute("placeholder", "Add Telephone number");
+          tempInput.setAttribute("type", "number");
           header.appendChild(tempInput);
           break;
         default:
@@ -110,16 +111,77 @@ class manipulateDom {
     // creating the apply button
     const applyButton = document.createElement("button");
     applyButton.textContent = "OK";
+    applyButton.className = "personApplyChange";
     applyButton.id = `apply-${person.personId}`;
     header.appendChild(applyButton);
   }
 
-  static refreshPeopleList() {
+  //QUESTION is this good in here? Feels not, maybe it belongs to the Person class but than again, would it be good in there?
+  //Maybe it should remain in main.js...
+  static createNewPerson() {
+    // gathering data
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let age = parseInt(document.getElementById("dateOfBirth").value);
+
+    //creating new instance
+    let human = new Person(firstName, lastName, age);
+
+    //refreshing the dom
+    this.refreshPersonList(human);
+
+    //clearing input fields
+    document.getElementById("firstName").value =
+      document.getElementById("lastName").value =
+      document.getElementById("dateOfBirth").value =
+        "";
+  }
+
+  //refreshing person column after a change and adding event listener to buttons
+  static refreshPersonList(person) {
     const persons = document.querySelectorAll(".person");
     persons.forEach((person) => {
       person.remove();
     });
+    for (let i = 0; i < person.showList().length; i++) {
+      this.displayPerson(person.showList()[i]);
+    }
+    this.applyAllPersonEventListener();
   }
+
+  //   static generateNumFromId(button) {
+  //     return parseInt(button.id.slice(button.id.indexOf("-") + 1));
+  //   }
+
+  static applyAllPersonEventListener() {
+    for (let i = 0; i < Person.readRegistryList().length; i++) {
+      document.getElementById(`apply-${i}`).addEventListener("click", () => {
+        let changeFirstName = document.getElementById(`person${i}-1`).value;
+        let changeLastName = document.getElementById(`person${i}-2`).value;
+        let changeBirthYear = document.getElementById(`person${i}-3`).value;
+        let changeTelNumber = document.getElementById(`person${i}-4`).value;
+        if (changeFirstName) {
+          Person.readRegistryList()[i].firstName = changeFirstName;
+          document.getElementById(`person${i}-1`).value = "";
+        }
+        if (changeLastName) {
+          Person.readRegistryList()[i].lastName = changeLastName;
+          document.getElementById(`person${i}-2`).value = "";
+        }
+        if (changeBirthYear) {
+          Person.readRegistryList()[i].birthYear = parseInt(changeBirthYear);
+          document.getElementById(`person${i}-3`).value = "";
+        }
+        if (changeTelNumber) {
+          Person.readRegistryList()[i].phoneNumber = changeTelNumber;
+          document.getElementById(`person${i}-4`).value = "";
+        }
+        this.refreshPersonList(Person.readRegistryList()[0]);
+      });
+    }
+  }
+
+  static gatherDataforPersonChange() {}
 }
 
 export default manipulateDom;

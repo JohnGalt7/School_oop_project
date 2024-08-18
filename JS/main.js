@@ -11,20 +11,18 @@ const p0 = new Person("Patient", "Zero", 1901);
 const p1 = new Person("Jenny", "Holt", 1970);
 
 p1.firstName = "Jessica";
-
 p1.phoneNumber = "06704561234";
+
+// Display input for person creation
 
 manipulateDom.displayPersonInputs();
 
-document.getElementById("newPeople").addEventListener("click", () => {
-  manipulateDom.refreshPeopleList();
-  let firstName = document.getElementById("firstName").value;
-  let lastName = document.getElementById("lastName").value;
-  let age = parseInt(document.getElementById("dateOfBirth").value);
-  let a = new Person(firstName, lastName, age);
-  console.log(a.showList());
+// Display persons already in list
 
-  for (let i = 0; i < a.showList().length; i++) {
-    manipulateDom.displayPerson(a.showList()[i]);
-  }
+manipulateDom.refreshPersonList(p0);
+
+//Creating a new person based on input and listing all the instances
+
+document.getElementById("newPeople").addEventListener("click", () => {
+  manipulateDom.createNewPerson();
 });
