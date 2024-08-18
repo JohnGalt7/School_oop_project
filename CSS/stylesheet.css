@@ -1,0 +1,30 @@
+body {
+  background-color: grey;
+  color: whitesmoke;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: auto auto auto auto;
+}
+.inputField {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.person {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.student {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+.teacher {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+.course {
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+div {
+  border: 1px solid black;
+}
