@@ -27,4 +27,11 @@ body {
 }
 div {
   border: 1px solid black;
+  display: flexbox;
+}
+.personText {
+  grid-column-start: 1;
+}
+.personInput {
+  grid-column-start: 2;
 }

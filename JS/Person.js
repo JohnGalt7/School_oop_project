@@ -1,5 +1,7 @@
 "use strict";
 
+import Registry from "./registry.js";
+
 class Person {
   #firstName;
   #lastName;
@@ -7,27 +9,28 @@ class Person {
   #age;
   #phoneNumber;
   #email;
-  static #list = [];
+  #id;
+  static #registry = new Registry("personregistry");
 
   constructor(firstName, lastName, birthYear) {
     this.#firstName = firstName;
     this.#lastName = lastName;
     this.#birthYear = birthYear;
     this.#age = this.calculateAge();
-    this.addToList();
-  }
-
-  // add instance to Person.#list
-
-  addToList() {
-    Person.#list.push(this);
-    return `List entry completed.`;
+    Person.#registry.addToList(this);
+    this.#id = this.numberInList();
   }
 
   // read index of instance in Person.#list
 
   numberInList() {
-    return Person.#list.indexOf(this);
+    return Person.#registry.readList().indexOf(this);
+  }
+
+  // read #id
+
+  get personId() {
+    return this.#id;
   }
 
   // generate full name
@@ -53,14 +56,14 @@ class Person {
     return regex.test(phoneNumber);
   }
 
-  set PhoneNumber(newPhoneNumber) {
+  set phoneNumber(newPhoneNumber) {
     if (this.validatePhoneNumber(newPhoneNumber)) {
       this.#phoneNumber = newPhoneNumber;
       return `Phone number set to ${newPhoneNumber}`;
     } else return `Error: ${newPhoneNumber} is not valid. Should contain 11 numbers and should start with '06'`;
   }
 
-  get PhoneNumber() {
+  get phoneNumber() {
     return this.#phoneNumber;
   }
 
@@ -68,7 +71,6 @@ class Person {
 
   calculateAge() {
     let thisYear = new Date().getFullYear();
-    console.log(thisYear - this.#birthYear);
     return thisYear - this.#birthYear;
   }
 

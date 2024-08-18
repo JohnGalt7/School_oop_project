@@ -2,22 +2,22 @@
 
 import Person from "./Person.js";
 import manipulateDom from "./dom.js";
+import Registry from "./registry.js";
 
 // TESTING
+
+const personRegistry = new Registry("personregistry");
 
 const p0 = new Person("Zero", "Patient", 1900);
 
 const p1 = new Person("Jenny", "Holt", 1970);
-console.log(p1);
-console.log(p1.fullName);
 
-console.log(`---\nChanging first name to Jessica \n---`);
 p1.firstName = "Jessica";
-console.log(p1.introduceSelf());
-p1.writePhoneNumber = "06704561234";
-console.log(p1);
-console.log(p1.readPhoneNumber);
 
-manipulateDom.setupPerson(p0);
-manipulateDom.setupPerson(p1);
+p1.phoneNumber = "06704561234";
+
+// manipulateDom.displayPerson(Person.list.forEach((el) => el.numberInList));
+console.log(p1);
+console.log(p0);
 console.log(p1.numberInList());
+console.log(p0.numberInList());
