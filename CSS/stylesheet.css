@@ -35,3 +35,6 @@ div {
 .personInput {
   grid-column-start: 2;
 }
+p {
+  margin: 0;
+}

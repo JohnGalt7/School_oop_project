@@ -6,9 +6,7 @@ import Registry from "./registry.js";
 
 // TESTING
 
-const personRegistry = new Registry("personregistry");
-
-const p0 = new Person("Zero", "Patient", 1900);
+const p0 = new Person("Patient", "Zero", 1901);
 
 const p1 = new Person("Jenny", "Holt", 1970);
 
@@ -16,8 +14,17 @@ p1.firstName = "Jessica";
 
 p1.phoneNumber = "06704561234";
 
-// manipulateDom.displayPerson(Person.list.forEach((el) => el.numberInList));
-console.log(p1);
-console.log(p0);
-console.log(p1.numberInList());
-console.log(p0.numberInList());
+manipulateDom.displayPersonInputs();
+
+document.getElementById("newPeople").addEventListener("click", () => {
+  manipulateDom.refreshPeopleList();
+  let firstName = document.getElementById("firstName").value;
+  let lastName = document.getElementById("lastName").value;
+  let age = parseInt(document.getElementById("dateOfBirth").value);
+  let a = new Person(firstName, lastName, age);
+  console.log(a.showList());
+
+  for (let i = 0; i < a.showList().length; i++) {
+    manipulateDom.displayPerson(a.showList()[i]);
+  }
+});

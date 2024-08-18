@@ -10,6 +10,10 @@ class Person {
   #phoneNumber;
   #email;
   #id;
+
+  // automatically creating a new Registry instance to be able to track the list of persons
+  // static, bc no need to inherit for instances, can access or modify via methods
+
   static #registry = new Registry("personregistry");
 
   constructor(firstName, lastName, birthYear) {
@@ -21,10 +25,16 @@ class Person {
     this.#id = this.numberInList();
   }
 
-  // read index of instance in Person.#list
+  // read index of instance in Person.#list for person #id
 
   numberInList() {
     return Person.#registry.readList().indexOf(this);
+  }
+
+  // access the list that contains this instance
+
+  showList() {
+    return Person.#registry.readList();
   }
 
   // read #id
@@ -39,7 +49,7 @@ class Person {
     return `${this.#firstName} ${this.#lastName}`;
   }
 
-  // manipulate names
+  // manipulate name
 
   set firstName(newFirstName) {
     this.#firstName = newFirstName;
@@ -47,6 +57,16 @@ class Person {
 
   set lastName(newLastName) {
     this.#lastName = newLastName;
+  }
+
+  // maniupulate email
+
+  set email(newEmail) {
+    this.#email = newEmail;
+  }
+
+  get email() {
+    return this.#email;
   }
 
   // manipulate phone number

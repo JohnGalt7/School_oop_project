@@ -4,27 +4,45 @@ class manipulateDom {
   // input manipulation for Person Class
 
   static displayPersonInputs() {
-    // creating new person instance
-    // const container = document.createElement("div");
-    // container.className = "inputField";
-    // const infoText = document.createElement("p");
-    // infoText.className = "inputField";
-    // infoText.textContent = `Change something in existing person`;
-    // // const textInput = document.createElement("input");
-    // // textInput.className = "inputField";
-    // // textInput.setAttribute("placeholder", "Id of person");
-    // // const applyButton = document.createElement("button");
-    // // applyButton.textContent = "OK";
-    // container.appendChild(infoText);
-    // container.appendChild(textInput);
-    // container.appendChild(applyButton);
-    // document.body.appendChild(container);
+    // creating new person instance - TODO refactor
+
+    const container = document.createElement("div");
+    container.className = "inputField";
+    const infoText = document.createElement("p");
+    infoText.className = "inputField";
+    infoText.textContent = `Create a new person`;
+    const textInput = document.createElement("input");
+    textInput.className = "inputField";
+    textInput.setAttribute("placeholder", "First Name");
+    textInput.id = "firstName";
+    const textInput2 = document.createElement("input");
+    textInput2.className = "inputField";
+    textInput2.setAttribute("placeholder", "Last Name");
+    textInput2.id = "lastName";
+    const ageInput = document.createElement("input");
+    ageInput.className = "inputField";
+    ageInput.setAttribute("placeholder", "Year of birth");
+    ageInput.id = "dateOfBirth";
+    const applyButton = document.createElement("button");
+    applyButton.id = "newPeople";
+    applyButton.textContent = "OK";
+    container.appendChild(infoText);
+    container.appendChild(textInput);
+    container.appendChild(textInput2);
+    container.appendChild(ageInput);
+    container.appendChild(applyButton);
+    document.body.appendChild(container);
   }
 
   // displaying information regarding the Person class
 
   static displayPerson(person) {
+    const container = document.createElement("div");
+    container.className = "person";
+    container.id = "people-container";
+
     const header = document.createElement("div");
+    header.id = "a-people";
     header.className = "person";
 
     // creating text for id
@@ -44,12 +62,22 @@ class manipulateDom {
     ageText.className = "personText";
     ageText.innerText = `Age: ${person.calculateAge()}`;
 
+    // creating text for phone number if available
+
+    const phoneNumberText = document.createElement("p");
+    phoneNumberText.className = "personText";
+    if (person.phoneNumber) {
+      phoneNumberText.innerText = `Phone number: ${person.phoneNumber}`;
+    } else phoneNumberText.innerText = `Phone number: not available`;
+
     // displaying info in the dom
 
     header.appendChild(personId);
     header.appendChild(nameText);
     header.appendChild(ageText);
-    document.body.appendChild(header);
+    header.appendChild(phoneNumberText);
+    container.appendChild(header);
+    document.body.appendChild(container);
 
     // createing input fields for manipulation
 
@@ -84,6 +112,13 @@ class manipulateDom {
     applyButton.textContent = "OK";
     applyButton.id = `apply-${person.personId}`;
     header.appendChild(applyButton);
+  }
+
+  static refreshPeopleList() {
+    const persons = document.querySelectorAll(".person");
+    persons.forEach((person) => {
+      person.remove();
+    });
   }
 }
 
