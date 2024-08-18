@@ -1,6 +1,6 @@
 "use strict";
 
-import Registry from "./registry.js";
+import Registry from "./Registry.js";
 
 class Person {
   #firstName;
@@ -108,7 +108,6 @@ class Person {
   }
 
   introduceSelf() {
-    // QUESTION which is better to use: the already set #age prop or to run calculateAge() method again? I guess the #age.
     return `Hello! I'm ${this.fullName} and I'm ${this.#age} years old.`;
   }
 }

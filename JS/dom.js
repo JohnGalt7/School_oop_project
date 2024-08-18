@@ -2,7 +2,7 @@
 
 import Person from "./Person.js";
 
-class manipulateDom {
+class ManipulateDom {
   // input manipulation for Person Class
 
   static displayPersonInputs() {
@@ -184,4 +184,4 @@ class manipulateDom {
   static gatherDataforPersonChange() {}
 }
 
-export default manipulateDom;
+export default ManipulateDom;

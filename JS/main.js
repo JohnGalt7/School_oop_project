@@ -1,8 +1,8 @@
 "use strict";
 
 import Person from "./Person.js";
-import manipulateDom from "./dom.js";
-import Registry from "./registry.js";
+import ManipulateDom from "./Dom.js";
+import Registry from "./Registry.js";
 
 // TESTING
 
@@ -15,14 +15,14 @@ p1.phoneNumber = "06704561234";
 
 // Display input for person creation
 
-manipulateDom.displayPersonInputs();
+ManipulateDom.displayPersonInputs();
 
 // Display persons already in list
 
-manipulateDom.refreshPersonList(p0);
+ManipulateDom.refreshPersonList(p0);
 
 //Creating a new person based on input and listing all the instances
 
 document.getElementById("newPeople").addEventListener("click", () => {
-  manipulateDom.createNewPerson();
+  ManipulateDom.createNewPerson();
 });
