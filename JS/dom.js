@@ -6,7 +6,7 @@ class ManipulateDom {
   // input manipulation for Person Class
 
   static displayPersonInputs() {
-    // creating new person instance - TODO refactor - ain't nobody got time for that
+    // dom elements for creating new person instance - TODO refactor - ain't nobody got time for that
 
     const container = document.createElement("div");
     container.className = "inputField";
@@ -116,8 +116,8 @@ class ManipulateDom {
     header.appendChild(applyButton);
   }
 
-  //QUESTION is this good in here? Feels not, maybe it belongs to the Person class but than again, would it be good in there?
-  //Maybe it should remain in main.js...
+  // creating new Person instance
+
   static createNewPerson() {
     // gathering data
     let firstName = document.getElementById("firstName").value;
@@ -149,9 +149,7 @@ class ManipulateDom {
     this.applyAllPersonEventListener();
   }
 
-  //   static generateNumFromId(button) {
-  //     return parseInt(button.id.slice(button.id.indexOf("-") + 1));
-  //   }
+  // adding event listener to all submit buttons in person instances
 
   static applyAllPersonEventListener() {
     for (let i = 0; i < Person.readRegistryList().length; i++) {
@@ -160,6 +158,8 @@ class ManipulateDom {
         let changeLastName = document.getElementById(`person${i}-2`).value;
         let changeBirthYear = document.getElementById(`person${i}-3`).value;
         let changeTelNumber = document.getElementById(`person${i}-4`).value;
+
+        // reading presented value if available
         if (changeFirstName) {
           Person.readRegistryList()[i].firstName = changeFirstName;
           document.getElementById(`person${i}-1`).value = "";
@@ -176,12 +176,14 @@ class ManipulateDom {
           Person.readRegistryList()[i].phoneNumber = changeTelNumber;
           document.getElementById(`person${i}-4`).value = "";
         }
+
+        // refreshing the listed person instances in the DOM
         this.refreshPersonList(Person.readRegistryList()[0]);
       });
     }
   }
 
-  static gatherDataforPersonChange() {}
+  static displayErrorMessage() {}
 }
 
 export default ManipulateDom;
