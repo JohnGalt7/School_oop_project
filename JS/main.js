@@ -26,3 +26,17 @@ ManipulateDom.refreshPersonList(p0);
 document.getElementById("newPeople").addEventListener("click", () => {
   ManipulateDom.createNewPerson();
 });
+
+let buttonTry = document.createElement("button");
+buttonTry.textContent = "Try";
+let buttonDel = document.createElement("button");
+buttonDel.textContent = "Del";
+document.body.appendChild(buttonTry);
+document.body.appendChild(buttonDel);
+buttonTry.addEventListener("click", () => {
+  ManipulateDom.displayErrorMessage("This is an Error Message");
+});
+buttonDel.addEventListener("click", () => {
+  let msg = document.querySelector(".error");
+  msg.remove();
+});

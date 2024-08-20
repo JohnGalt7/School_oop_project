@@ -8,7 +8,7 @@ class ManipulateDom {
   static displayPersonInputs() {
     // dom elements for creating new person instance - TODO refactor - ain't nobody got time for that
 
-    const container = document.createElement("div");
+    const container = document.createElement("form");
     container.className = "inputField";
     const infoText = document.createElement("p");
     infoText.className = "inputField";
@@ -17,17 +17,22 @@ class ManipulateDom {
     textInput.className = "inputField";
     textInput.setAttribute("placeholder", "First Name");
     textInput.id = "firstName";
+    textInput.required = true;
     const textInput2 = document.createElement("input");
     textInput2.className = "inputField";
     textInput2.setAttribute("placeholder", "Last Name");
     textInput2.id = "lastName";
+    textInput2.required = true;
     const ageInput = document.createElement("input");
     ageInput.className = "inputField";
     ageInput.setAttribute("placeholder", "Year of birth");
     ageInput.id = "dateOfBirth";
+    ageInput.required = true;
+    ageInput.type = "number";
     const applyButton = document.createElement("button");
     applyButton.id = "newPeople";
-    applyButton.textContent = "OK";
+    applyButton.type = "submit";
+    applyButton.textContent = "Create";
 
     // display in the DOM
 
@@ -122,13 +127,23 @@ class ManipulateDom {
     // gathering data
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
-    let age = parseInt(document.getElementById("dateOfBirth").value);
+    let age;
+    if (document.getElementById("dateOfBirth").value !== "")
+      age = parseInt(document.getElementById("dateOfBirth").value);
 
-    //creating new instance
-    let human = new Person(firstName, lastName, age);
+    // creating array of datas to validate
+    let input = [];
+    input.push(firstName, lastName, age);
+    console.log(input);
+    console.log(typeof input[2]);
 
-    //refreshing the dom
-    this.refreshPersonList(human);
+    //creating new instance if all the inputs are correct
+    let human;
+    if (this.valideateInput(input)) {
+      human = new Person(firstName, lastName, age);
+      //refreshing the dom
+      this.refreshPersonList(human);
+    }
 
     //clearing input fields
     document.getElementById("firstName").value =
@@ -137,7 +152,23 @@ class ManipulateDom {
         "";
   }
 
+  // validating inputs
+
+  static valideateInput(inputArr) {
+    let counter = 0;
+    for (let i = 0; i < inputArr.length; i++) {
+      if (inputArr[i]) {
+        counter++;
+        console.log(counter);
+      }
+    }
+    if (counter === inputArr.length) {
+      return true;
+    } else return false;
+  }
+
   //refreshing person column after a change and adding event listener to buttons
+
   static refreshPersonList(person) {
     const persons = document.querySelectorAll(".person");
     persons.forEach((person) => {
@@ -183,7 +214,12 @@ class ManipulateDom {
     }
   }
 
-  static displayErrorMessage() {}
+  static displayErrorMessage(message) {
+    const errorField = document.createElement("div");
+    errorField.className = "error";
+    errorField.textContent = message;
+    document.body.appendChild(errorField);
+  }
 }
 
 export default ManipulateDom;
