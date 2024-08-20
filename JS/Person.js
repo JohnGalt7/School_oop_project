@@ -1,5 +1,6 @@
 "use strict";
 
+import ManipulateDom from "./Dom.js";
 import Registry from "./Registry.js";
 
 class Person {
@@ -93,7 +94,10 @@ class Person {
   set phoneNumber(newPhoneNumber) {
     if (this.validatePhoneNumber(newPhoneNumber)) {
       this.#phoneNumber = newPhoneNumber;
-    } else console.log(`Error: ${newPhoneNumber} is not valid. Should contain 11 numbers and should start with '06'`);
+    } else
+      ManipulateDom.displayErrorMessage(
+        `Error: Phone number '${newPhoneNumber}' is not valid. Should contain 11 numbers and start with '06'`
+      );
   }
 
   get phoneNumber() {

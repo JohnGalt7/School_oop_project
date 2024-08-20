@@ -134,8 +134,6 @@ class ManipulateDom {
     // creating array of datas to validate
     let input = [];
     input.push(firstName, lastName, age);
-    console.log(input);
-    console.log(typeof input[2]);
 
     //creating new instance if all the inputs are correct
     let human;
@@ -143,7 +141,7 @@ class ManipulateDom {
       human = new Person(firstName, lastName, age);
       //refreshing the dom
       this.refreshPersonList(human);
-    }
+    } else this.displayErrorMessage("At least one input was invalid or missing, fill all the input fields.");
 
     //clearing input fields
     document.getElementById("firstName").value =
@@ -152,14 +150,13 @@ class ManipulateDom {
         "";
   }
 
-  // validating inputs
+  // validating inputs of new person creation
 
   static valideateInput(inputArr) {
     let counter = 0;
     for (let i = 0; i < inputArr.length; i++) {
       if (inputArr[i]) {
         counter++;
-        console.log(counter);
       }
     }
     if (counter === inputArr.length) {
@@ -216,9 +213,36 @@ class ManipulateDom {
 
   static displayErrorMessage(message) {
     const errorField = document.createElement("div");
-    errorField.className = "error";
-    errorField.textContent = message;
-    document.body.appendChild(errorField);
+    const errorLine = document.createElement("p");
+
+    //if error message is not created in DOM, create it
+    if (!document.getElementById("errorField")) {
+      errorField.className = "error";
+      errorField.id = "errorField";
+      errorLine.id = "errorLine";
+      document.body.appendChild(errorField);
+      errorField.appendChild(errorLine);
+    }
+    //append current message
+
+    document.getElementById("errorLine").textContent = message;
+
+    //create OK button if not present yet
+    if (!document.getElementById("clearError")) {
+      const clearError = document.createElement("button");
+      clearError.className = "button";
+      clearError.id = "clearError";
+      clearError.innerText = "OK";
+      document.getElementById("errorField").appendChild(clearError);
+      clearError.addEventListener("click", () => {
+        clearError.innerText = "";
+        this.removeErrorMessage();
+      });
+    }
+  }
+  static removeErrorMessage() {
+    let errorField = document.querySelector(".error");
+    errorField.remove();
   }
 }
 
